@@ -10,7 +10,7 @@ object TensorFlowExample {
 
   def main(args: Array[String]) {
     // image file
-    val jpgFile = args.headOption.getOrElse("sushi.jpg")
+    val jpgFile = args.headOption.getOrElse("edamame.jpg")
     val jpgAsBytes = jpgFile match {
       case urlString if urlString.startsWith("http") =>
         val url = new URL(urlString)
