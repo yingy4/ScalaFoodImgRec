@@ -19,6 +19,10 @@ import tensorflow.model.InceptionV3
 
 import scala.concurrent.{ExecutionContext, Future}
 
+/**
+  * reference: https://github.com/playframework/play-scala-fileupload-example
+  * @param name
+  */
 case class FormData(name: String)
 
 /**

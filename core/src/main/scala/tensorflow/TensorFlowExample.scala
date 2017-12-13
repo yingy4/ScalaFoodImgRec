@@ -6,6 +6,9 @@ import java.nio.file.{Files, Paths}
 
 import tensorflow.model.{InceptionV3, Label}
 
+/**
+  * reference: https://github.com/mskimm/tensorflow-scala
+  */
 object TensorFlowExample {
 
   def jpgBytes(jpgFile: String) = {

@@ -10,6 +10,11 @@ import tensorflow.model.TensorFlowModel
 
 import scala.collection.JavaConverters._
 
+/**
+  * reference: https://github.com/mskimm/tensorflow-scala
+  * @param model
+  */
+
 class TensorFlowProvider(model: TensorFlowModel) extends AutoCloseable {
 
   private val blas = BLAS.getInstance()

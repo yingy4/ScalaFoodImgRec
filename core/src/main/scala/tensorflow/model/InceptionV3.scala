@@ -5,6 +5,13 @@ import java.nio.file.{Files, Paths}
 
 import scala.collection.JavaConverters._
 
+/**
+  * reference: https://github.com/mskimm/tensorflow-scala
+  * @param graphPath
+  * @param humanLabelPath
+  */
+
+
 class InceptionV3(graphPath: String, humanLabelPath: String) extends TensorFlowModel with Labelable {
 
   def this(modelPath: String) = this(
