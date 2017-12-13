@@ -1,7 +1,6 @@
 package SparkTest
 
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest.{BeforeAndAfter, FlatSpec, Matchers}
 import tensorflow.sparkBulk.WordCount
 
