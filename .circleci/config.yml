@@ -30,7 +30,9 @@ jobs:
           - v1-dependencies-{{ checksum "build.sbt" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-          
+      
+      - run: mkdir -p rest/model
+      - run: mkdir -p core/model
       - run: ln -s model/new20retrained_label.txt rest/model/new20retrained_label.txt
       - run: ln -s model/new20retrained_graph.pb rest/model/new20retrained_graph.pb
       - run: ln -s model/new20retrained_label.txt core/model/new20retrained_label.txt
