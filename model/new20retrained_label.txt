@@ -1,20 +1,20 @@
-caesar salad
-chicken curry
-chicken wings
+caesar_salad
+chicken_curry
+chicken_wings
 churros
-clam chowder
-cup cakes
+clam_chowder
+cup_cakes
 donuts
 dumplings
 edamame
-french fries
+french_fries
 hamburger
-hot dog
+hot_dog
 macarons
-onion rings
+onion_rings
 oysters
 pizza
-red velvet cake
-spring rolls
+red_velvet_cake
+spring_rolls
 steak
 sushi

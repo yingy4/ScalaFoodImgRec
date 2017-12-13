@@ -1,7 +1,7 @@
 package controllers
 
-import java.io.File
-import java.nio.file.{Files, Path}
+import java.io.{BufferedWriter, File, FileWriter}
+import java.nio.file.{Files, Path, Paths}
 import javax.inject._
 
 import akka.stream.IOResult
@@ -14,7 +14,7 @@ import play.api.libs.streams._
 import play.api.mvc.MultipartFormData.FilePart
 import play.api.mvc._
 import play.core.parsers.Multipart.FileInfo
-import tensorflow.TensorFlowProvider
+import tensorflow.{TensorFlowExample, TensorFlowProvider}
 import tensorflow.model.InceptionV3
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -29,7 +29,8 @@ class HomeController @Inject() (cc:MessagesControllerComponents)
                                (implicit executionContext: ExecutionContext)
   extends MessagesAbstractController(cc) {
 
-  // define the model
+
+/*  // define the model
   val model = new InceptionV3("model")
 
   // initialize TensorFlowProvider
@@ -38,7 +39,7 @@ class HomeController @Inject() (cc:MessagesControllerComponents)
   // setting up input and output layers to classify
   val inputLayer = "DecodeJpeg/contents"
   val outputLayer = "final_result"
-  val bottleneckLayer = "pool_3/_reshape"
+  val bottleneckLayer = "pool_3/_reshape"*/
 
   private val logger = Logger(this.getClass)
 
@@ -80,19 +81,24 @@ class HomeController @Inject() (cc:MessagesControllerComponents)
   /**
    * A generic operation on the temporary file that deletes the temp file after completion.
    */
+  //val file = new File("userResults.txt")
+  val file1 = new File("userResults.txt")
+
+
+
   private def operateOnTempFile(file: File) = {
-    val size = Files.size(file.toPath)
-    //logger.info(s"size = ${size}")
-    val imageBytes = Files.readAllBytes(file.toPath)
 
+    val image = file.toPath.toString
 
-    val result = provider.run(inputLayer -> imageBytes, outputLayer)
-    val print = model.getLabelOf(result.head, 5)
+    val print = TensorFlowExample.foodRecog(image)
+
     logger.info(s"The dish probably is: ${print}")
     Files.deleteIfExists(file.toPath)
     //size
-    print
+
+    print.head
   }
+
 
   /**
    * Uploads a multipart file as a POST request.
@@ -100,14 +106,28 @@ class HomeController @Inject() (cc:MessagesControllerComponents)
    * @return
    */
   def upload = Action(parse.multipartFormData(handleFilePartAsFile)) { implicit request =>
-    val fileOption = request.body.file("name").map {
+    val fileOption = request.body.file("Dish Identifier").map {
       case FilePart(key, filename, contentType, file) =>
         logger.info(s"key = ${key}, filename = ${filename}, contentType = ${contentType}, file = $file")
         val data = operateOnTempFile(file)
-        data
+        val file1 = new File("userResults.txt")
+        if (file1.exists()) {
+        val bw = new BufferedWriter(new FileWriter(file1,true))
+          bw.append(data.label+"\n")
+          bw.close()
+    }        else{
+          val file2 = new File("userResults.txt")
+          val bw = new BufferedWriter(new FileWriter(file2))
+          bw.write(data.label+"\n")
+          bw.close()
+
+        }
+
+        data.label+" "+data.score
     }
 
-    Ok(s"file size = ${fileOption.getOrElse("no file")}")
+    Ok(s"You have ${fileOption.getOrElse("no file")}")
+
   }
 
 }

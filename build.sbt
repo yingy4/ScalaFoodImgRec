@@ -1,4 +1,5 @@
 name := "ScalaProject"
+val scalaTestVersion = "3.0.1"
 
 lazy val commonSettings = Seq(
   scalaVersion := "2.11.8"
@@ -10,7 +11,10 @@ lazy val core = project
   .settings(Seq(
     libraryDependencies ++= Seq(
       "org.tensorflow" % "tensorflow" % "1.2.1",
-      "com.github.fommil.netlib" % "all" % "1.1.2" pomOnly()
+      "com.github.fommil.netlib" % "all" % "1.1.2" pomOnly(),
+      "org.scalatest" %% "scalatest" % scalaTestVersion % "test",
+      "org.apache.spark" % "spark-core_2.11" % "2.2.0",
+      "org.apache.spark" % "spark-sql_2.11" % "2.2.0"
     )
   ))
 
@@ -22,6 +26,7 @@ lazy val rest = project
     resolvers += Resolver.sonatypeRepo("snapshots"),
     libraryDependencies ++= Seq(
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test,
+      "org.scalatest" %% "scalatest" % scalaTestVersion % "test",
       "com.h2database" % "h2" % "1.4.196",
       ws,
       guice
@@ -36,3 +41,4 @@ lazy val root = (project in file("."))
   .dependsOn(core, rest)
   .settings(commonSettings)
 
+parallelExecution in Test := false
