@@ -50,5 +50,6 @@ jobs:
       - run: cat /dev/null | sbt clean coverage test
       # generate test coverage report
       - run: cat /dev/null | sbt coverageReport
+      - run: cat /dev/null | sbt coverageAggregate
       # upload report to codacy
       - run: cat /dev/null | sbt codacyCoverage
